@@ -18,9 +18,6 @@ public class Note {
     @Getter
     private Integer id;
 
-    @Column(name = "authorid", nullable = false)
-    private Integer authorId;
-
     @Getter
     @Setter
     private String content;

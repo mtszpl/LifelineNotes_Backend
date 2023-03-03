@@ -5,17 +5,20 @@ import com.example.notesbackend.user.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Builder
 @Entity
+@Builder
 @Table(name = "note_permissions")
 @IdClass(PermissionId.class)
+@NoArgsConstructor
 @AllArgsConstructor
 public class Permission {
 
     @Id
+    @Getter
     private Integer noteId;
 
     @Id
+    @Getter
     private Integer userId;
 
     @ManyToOne
@@ -26,9 +29,10 @@ public class Permission {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
-    private AppUser user;
+    private AppUser appUser;
 
     @Getter
     @Setter
-    private String permission;
+    @Enumerated(EnumType.STRING)
+    private PermissionType accessPermission;
 }

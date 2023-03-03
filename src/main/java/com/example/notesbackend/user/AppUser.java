@@ -2,13 +2,16 @@ package com.example.notesbackend.user;
 
 import com.example.notesbackend.permissions.Permission;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @Entity
@@ -34,13 +37,17 @@ public class AppUser implements UserDetails {
     @Setter
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "appUser", fetch = FetchType.EAGER)
+    @Getter
     private List<Permission> permissions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority(role.name()));
-        return null;
+        List<GrantedAuthority> authoritiesList = getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getAccessPermission().name()))
+                .collect(Collectors.toList());
+        return authoritiesList;
     }
 
     @Override

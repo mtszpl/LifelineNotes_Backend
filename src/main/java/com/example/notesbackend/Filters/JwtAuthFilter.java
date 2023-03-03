@@ -1,5 +1,6 @@
-package com.example.notesbackend.config;
+package com.example.notesbackend.Filters;
 
+import com.example.notesbackend.config.JwtService;
 import com.example.notesbackend.user.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -48,7 +49,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-                request.getSession(true).setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
                 filterChain.doFilter(request, response);
             }
         }

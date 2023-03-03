@@ -12,11 +12,6 @@ public class AuthenticationController {
 
     private final AuthenticationService authService;
 
-    @GetMapping("/register")
-    public String authTest(){
-        return "testRespo";
-    }
-
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
         return ResponseEntity.ok(authService.register(request));
