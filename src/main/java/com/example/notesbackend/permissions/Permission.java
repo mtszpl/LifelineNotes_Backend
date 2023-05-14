@@ -22,6 +22,7 @@ public class Permission {
     private Integer userId;
 
     @ManyToOne
+    @Getter
     @MapsId("noteId")
     @JoinColumn(name = "note_id")
     private Note note;

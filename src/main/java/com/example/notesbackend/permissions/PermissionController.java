@@ -1,5 +1,6 @@
 package com.example.notesbackend.permissions;
 
+import com.example.notesbackend.notes.Note;
 import com.example.notesbackend.user.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
