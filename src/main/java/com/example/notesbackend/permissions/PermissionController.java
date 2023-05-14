@@ -14,14 +14,10 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/permissions")
 @RequiredArgsConstructor
+@CrossOrigin
 public class PermissionController {
 
     private final PermissionService permissionService;
-
-    @GetMapping
-    public String test(@RequestParam String id) {
-        return id;
-    }
 
     @GetMapping("/user={id}")
     public List<Permission> getUserPermission(@PathVariable("id") Integer userId) {
@@ -31,6 +27,12 @@ public class PermissionController {
     @GetMapping("/note={id}")
     public List<Permission> getNoteAccess(@PathVariable("id") Integer noteId) {
         return permissionService.getByNoteId(noteId);
+    }
+
+    @GetMapping()
+    public List<Permission> getNotes(){
+        AppUser loggedUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return loggedUser.getPermissions();
     }
 
     @PostMapping("/{id}")
